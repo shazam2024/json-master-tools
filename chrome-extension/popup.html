@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Master Tools</title>
+    <style>
+        body {
+            width: 350px;
+            min-height: 400px;
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .container {
+            padding: 16px;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 16px;
+        }
+        .logo {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        .title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e293b;
+            margin: 0;
+        }
+        .subtitle {
+            font-size: 12px;
+            color: #64748b;
+            margin: 4px 0 0 0;
+        }
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .tool-btn {
+            padding: 12px 8px;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 11px;
+            text-align: center;
+        }
+        .tool-btn:hover {
+            background: #f1f5f9;
+            border-color: #6366f1;
+        }
+        .tool-btn.primary {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            border: none;
+        }
+        .tool-btn.primary:hover {
+            background: linear-gradient(135deg, #5856eb 0%, #7c3aed 100%);
+        }
+        .footer {
+            text-align: center;
+            margin-top: 16px;
+            padding-top: 12px;
+            border-top: 1px solid #e2e8f0;
+        }
+        .footer-link {
+            color: #6366f1;
+            text-decoration: none;
+            font-size: 12px;
+        }
+        .footer-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">J</div>
+            <h1 class="title">JSON Master Tools</h1>
+            <p class="subtitle">Developer Utilities Toolkit</p>
+        </div>
+
+        <div class="tools-grid">
+            <button class="tool-btn" onclick="openTool('json-formatter')">JSON Formatter</button>
+            <button class="tool-btn" onclick="openTool('json-validator')">JSON Validator</button>
+            <button class="tool-btn" onclick="openTool('base64-encoder')">Base64 Encoder</button>
+            <button class="tool-btn" onclick="openTool('url-encoder')">URL Encoder</button>
+            <button class="tool-btn" onclick="openTool('hash-generator')">Hash Generator</button>
+            <button class="tool-btn" onclick="openTool('uuid-generator')">UUID Generator</button>
+            <button class="tool-btn primary" onclick="openFullApp()">🚀 Full App</button>
+            <button class="tool-btn" onclick="openTool('timestamp-converter')">Timestamp</button>
+        </div>
+
+        <div class="footer">
+            <a href="https://your-domain.com/chrome-extension" target="_blank" class="footer-link">
+                Setup Instructions →
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function openTool(tool) {
+            const url = `https://your-domain.com/tools/${tool}`;
+            chrome.tabs.create({ url: url });
+        }
+
+        function openFullApp() {
+            chrome.tabs.create({ url: 'https://your-domain.com' });
+        }
+    </script>
+</body>
+</html>
