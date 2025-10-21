@@ -154,8 +154,13 @@ export const useSEO = () => {
     const path = location.pathname
     const seoData = toolSEOData[path] || toolSEOData['/']
 
+    console.log('🚀 SEO: Initializing SEO for path:', path)
+    console.log('📄 SEO: Setting title:', seoData.title)
+    console.log('📝 SEO: Setting description:', seoData.description)
+
     // Update document title
     document.title = seoData.title
+    console.log('✅ SEO: Title updated successfully')
 
     // Update meta description
     updateMetaTag('name', 'description', seoData.description)
@@ -176,6 +181,9 @@ export const useSEO = () => {
 
     // Add structured data
     updateStructuredData(path, seoData)
+
+    console.log('🎉 SEO: SEO optimization completed for path:', path)
+    console.log('🔍 SEO: Meta tags and structured data applied successfully')
 
   }, [location.pathname])
 }
