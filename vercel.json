@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/((?!api|_next/static|_next/image|favicon.ico|manifest.json|sw.js|offline.html|icons|chrome-extension).*)",
+      "destination": "/index.html"
+    }
+  ]
+}

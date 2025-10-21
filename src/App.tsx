@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import Header from '@/components/common/Header'
 import Sidebar from '@/components/common/Sidebar'
+import { useSEO } from '@/hooks/useSEO'
 import Dashboard from '@/pages/Dashboard'
 import JsonFormatter from '@/pages/tools/JsonFormatter'
 import JsonValidator from '@/pages/tools/JsonValidator'
@@ -37,6 +38,9 @@ import { useThemeStore } from '@/stores/themeStore'
 const App: React.FC = () => {
   const { isDarkMode } = useThemeStore()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+
+  // Initialize SEO hook
+  useSEO()
 
   React.useEffect(() => {
     if (isDarkMode) {
