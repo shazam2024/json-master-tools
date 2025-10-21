@@ -195,13 +195,11 @@ const updateMetaTag = (attribute: string, name: string, content: string) => {
 
 const updateStructuredData = (path: string, seoData: SEOMeta) => {
   // Remove existing structured data
-  const existingStructuredData = document.querySelector('script[type="application/ld+json"]')
-  if (existingStructuredData) {
-    existingStructuredData.remove()
-  }
+  const existingStructuredData = document.querySelectorAll('script[type="application/ld+json"]')
+  existingStructuredData.forEach(script => script.remove())
 
-  // Create new structured data
-  const structuredData: StructuredData = {
+  // Base WebApplication schema
+  const baseSchema: StructuredData = {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
     name: 'JSON Master Tools',
@@ -219,12 +217,117 @@ const updateStructuredData = (path: string, seoData: SEOMeta) => {
   // Add specific tool information for tool pages
   if (path !== '/') {
     const toolName = path.split('/tools/')[1]?.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())
-    structuredData.name = `${toolName} - JSON Master Tools`
-    structuredData.description = `Free online ${toolName} tool. ${seoData.description}`
+    baseSchema.name = `${toolName} - JSON Master Tools`
+    baseSchema.description = `Free online ${toolName} tool. ${seoData.description}`
   }
 
-  const script = document.createElement('script')
-  script.type = 'application/ld+json'
-  script.textContent = JSON.stringify(structuredData)
-  document.getElementsByTagName('head')[0].appendChild(script)
+  // Add JSON formatter specific schemas
+  if (path === '/tools/json-formatter') {
+    const jsonFormatterSchemas = [
+      baseSchema,
+      // FAQ Schema
+      {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: [
+          {
+            '@type': 'Question',
+            name: 'Is this JSON formatter really free?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Yes! Our JSON formatter is completely free to use with no hidden costs or premium features. You can format unlimited JSON data without any registration or payment.'
+            }
+          },
+          {
+            '@type': 'Question',
+            name: 'What is JSON formatting?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'JSON formatting, also known as pretty printing, makes JSON data more readable by adding proper indentation, line breaks, and spacing between elements. This makes it easier for humans to read and understand.'
+            }
+          },
+          {
+            '@type': 'Question',
+            name: 'Can I format large JSON files?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Absolutely! Our tool can handle large JSON files efficiently. For extremely large files, we recommend using the download feature to save the formatted output.'
+            }
+          },
+          {
+            '@type': 'Question',
+            name: 'Is my JSON data safe and private?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Yes, your privacy is important to us. All JSON processing happens in your browser locally. We don\'t send your data to any servers, ensuring complete privacy and security.'
+            }
+          }
+        ]
+      },
+      // HowTo Schema
+      {
+        '@context': 'https://schema.org',
+        '@type': 'HowTo',
+        name: 'How to Format JSON Data Online',
+        description: 'Step-by-step guide to format and beautify JSON data using our free online tool',
+        step: [
+          {
+            '@type': 'HowToStep',
+            position: 1,
+            name: 'Paste JSON',
+            text: 'Copy and paste your JSON data into the input field'
+          },
+          {
+            '@type': 'HowToStep',
+            position: 2,
+            name: 'Choose Format',
+            text: 'Select your preferred indentation (2 spaces, 4 spaces, or tabs)'
+          },
+          {
+            '@type': 'HowToStep',
+            position: 3,
+            name: 'Get Result',
+            text: 'Click format and get beautifully formatted JSON instantly'
+          }
+        ]
+      },
+      // SoftwareApplication schema for better ranking
+      {
+        '@context': 'https://schema.org',
+        '@type': 'SoftwareApplication',
+        name: 'Free JSON Formatter Online',
+        description: 'Best free online JSON formatter and beautifier tool for developers',
+        applicationCategory: 'DeveloperApplication',
+        operatingSystem: 'Web Browser',
+        offers: {
+          '@type': 'Offer',
+          price: '0',
+          priceCurrency: 'USD'
+        },
+        featureList: [
+          'Instant JSON formatting',
+          'Syntax validation',
+          'Customizable indentation',
+          'Copy to clipboard',
+          'Download formatted JSON',
+          'Mobile friendly',
+          'No registration required'
+        ]
+      }
+    ]
+
+    // Add all schemas
+    jsonFormatterSchemas.forEach(schema => {
+      const script = document.createElement('script')
+      script.type = 'application/ld+json'
+      script.textContent = JSON.stringify(schema)
+      document.getElementsByTagName('head')[0].appendChild(script)
+    })
+  } else {
+    // For other pages, just add the base schema
+    const script = document.createElement('script')
+    script.type = 'application/ld+json'
+    script.textContent = JSON.stringify(baseSchema)
+    document.getElementsByTagName('head')[0].appendChild(script)
+  }
 }
